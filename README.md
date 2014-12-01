@@ -15,3 +15,5 @@ Open a terminal and execute the following commands:
 % wget https://raw.githubusercontent.com/osrg/ryu-handson/master/docker/ryu-docker-handson.sh
 % ./ryu-docker-handson.sh install
 ```
+
+All necessary software will be installed.
