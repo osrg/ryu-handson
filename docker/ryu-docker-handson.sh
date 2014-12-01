@@ -76,7 +76,7 @@ case "$1" in
 	sudo gpasswd -a `whoami` docker
         sudo apt-get install -y --force-yes emacs23-nox
         sudo apt-get install -y --force-yes wireshark
-	sudo apt-get install -y --force-yes wget
+	sudo apt-get install -y --force-yes iputils-arping
         sudo apt-get install -y --force-yes bridge-utils
         sudo apt-get install -y --force-yes tcpdump
         sudo apt-get install -y --force-yes lv
