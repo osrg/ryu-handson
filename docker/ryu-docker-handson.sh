@@ -28,7 +28,7 @@ run_host() {
 link_ovs_to_host() {
     local host_name=h$1
     sudo pipework br$1 -i eth$1 ovs 0/0
-    sudo pipework br$1 -i eth1 $host_name 10.0.0.$1/24 42:5c:03:da:78:0$1
+    sudo pipework br$1 -i eth1 $host_name 10.0.0.$1/24 02:00:00:00:00:0$1
     docker exec ovs ovs-vsctl add-port s0 eth$1
 }
 
