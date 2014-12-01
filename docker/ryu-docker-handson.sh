@@ -55,16 +55,19 @@ case "$1" in
 	run_host 1
 	run_host 2
 	run_host 3
+        run_host 4
 
 	link_ovs_to_host 1
 	link_ovs_to_host 2
 	link_ovs_to_host 3
+	link_ovs_to_host 4
 	;;
     stop)
 	docker rm -f $(docker ps -qa)
 	delete_bridge 1
 	delete_bridge 2
 	delete_bridge 3
+        delete_bridge 4
 	;;
     install)
         check_user
