@@ -3,8 +3,8 @@ ryu-handson
 
 Preparation
 -----------
-Set up Ubuntu 14.04 Desktop Virtual Machine environment. We tested
-this with Fusion on Mac OS X.
+Set up Ubuntu 14.04 Server Edition Virtual Machine environment. We
+tested this with Fusion on Mac OS X and VirtualBox on Windows 8.
 
 Setup
 -----
