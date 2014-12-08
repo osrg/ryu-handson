@@ -22,7 +22,7 @@ run_ovs() {
 
 run_host() {
     local host_name=h$1
-    docker run --name $host_name -itd osrg/ryu /bin/bash
+    docker run --name $host_name -itd host /bin/bash
 }
 
 link_ovs_to_host() {
@@ -86,6 +86,8 @@ case "$1" in
 	sudo wget https://raw.github.com/jpetazzo/pipework/master/pipework -O /usr/local/bin/pipework
 	sudo chmod 755 /usr/local/bin/pipework
         sudo docker pull osrg/ryu
+        sudo docker run --name host -itd osrg/ryu apt-get install -y --force-yes tcpdump
+        sudo docker commit host host
         sudo docker pull davetucker/docker-ovs:2.1.2
 	;;
     *)
