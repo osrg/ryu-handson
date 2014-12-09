@@ -13,6 +13,7 @@ Open a terminal and execute the following commands:
 ```
 % sudo apt-get install -y --force-yes wget
 % wget https://raw.githubusercontent.com/osrg/ryu-handson/master/docker/ryu-docker-handson.sh
+% chmod +x ryu-docker-handson.sh
 % ./ryu-docker-handson.sh install
 ```
 
