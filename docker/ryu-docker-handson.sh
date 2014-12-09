@@ -1,7 +1,7 @@
 #!/bin/sh
 
 run_ryu() {
-    docker run --name ryu --expose 6633 -itd osrg/ryu /bin/bash
+    docker run --name ryu -v $HOME:/handson --expose 6633 -itd osrg/ryu /bin/bash
 }
 
 run_ovs() {
