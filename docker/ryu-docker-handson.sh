@@ -33,7 +33,7 @@ link_ovs_to_host() {
 }
 
 delete_bridge() {
-    local name=$1
+    local name=br$1
     local sysfs_name=/sys/class/net/$name
     if [ -e $sysfs_name ]; then
 	sudo ifconfig $name down
