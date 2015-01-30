@@ -10,20 +10,19 @@ def gen_text(neighbornum=2, router_type="spine", subnum=1):
 	network_num=0
 	if router_type=="spine":
 		myAS = "6500"+str(subnum)
+		myid = "10."+str(subnum)+".1.1"
 		network.append("10."+str(subnum)+".1.0/24")
 		network.append("10."+str(subnum)+".2.0/24")
-		myid = "10."+str(subnum)+".1.1"
 		network_num=2
 
 	else:
 		myAS = "6501"+str(subnum)
-		myid = "10.1."+str(subnum)+".1/24"
+		myid = "10.1."+str(subnum)+".2"
 		network.append("10.1."+str(subnum)+".0/24")
 		network.append("10.2."+str(subnum)+".0/24")
 		network.append("10.3."+str(subnum)+".0/24")
 		network.append("192.168."+str(subnum)+".0/24")
 		network_num=4
-		myid = "10.1."+str(subnum)+".2"
 	conf_tex ="\t\thostname "+ router_type + str(subnum)
 	conf_tex += """
 		password zebra
@@ -70,7 +69,7 @@ for i in xrange(1,4):
 	dirname = "s"+str(i)
 	if not os.path.exists(dirname):
 		os.mkdir(dirname)
-	fname=dirname+"/quagga_bgpd.conf"
+	fname=dirname+"/bgpd.conf"
 	conf_tex = gen_text(2,"spine",i)
 	f = open(fname, 'w')
 	f.write(conf_tex)
@@ -80,7 +79,7 @@ for i in xrange(1,3):
 	dirname = "l"+str(i)
 	if not os.path.exists(dirname):
 		os.mkdir(dirname)
-	fname=dirname+"/quagga_bgpd.conf"
+	fname=dirname+"/gpd.conf"
 	conf_tex = gen_text(3,"leaf",i)
 	f = open(fname, 'w')
 	f.write(conf_tex)
