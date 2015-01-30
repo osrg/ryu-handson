@@ -41,7 +41,7 @@ def gen_text(neighbornum=2, router_type="spine", subnum=1):
 
 	if router_type=="spine":
 		for p in range(neighbornum):
-			nid = "neighbor "+"10."+str(subnum)+"."+str(p)+".2"
+			nid = "neighbor "+"10."+str(subnum)+"."+str(p+1)+".2"
 			conf_tex+="\t\t"+nid + " remote-as 6501"+str(p+1)+"\n"
 			conf_tex+="\t\t"+nid + " timers 1 4\n"
 			conf_tex+="\t\t"+nid + " version 4\n"
@@ -49,7 +49,7 @@ def gen_text(neighbornum=2, router_type="spine", subnum=1):
 			conf_tex+="\t\t!\n \t\t!\n"
 	else:
 		for p in range(neighbornum):
-			nid = "neighbor "+"10."+str(p)+"."+str(subnum)+".2"
+			nid = "neighbor "+"10."+str(p+1)+"."+str(subnum)+".1"
 			conf_tex+="\t\t"+nid + " remote-as 6500"+str(p+1)+"\n"
 			conf_tex+="\t\t"+nid + " timers 1 4\n"
 			conf_tex+="\t\t"+nid + " version 4\n"
