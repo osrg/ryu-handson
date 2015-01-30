@@ -1,5 +1,6 @@
 #!/usr/bin/python
-# coding: UTF-8
+
+import os
 
 def gen_text(neighbornum=2, router_type="spine", subnum=1):
 
@@ -66,14 +67,20 @@ def gen_text(neighbornum=2, router_type="spine", subnum=1):
 
 
 for i in xrange(1,4):
-	fname='quagga_bgpd_spine'+str(i)
+	dirname = "s"+str(i)
+	if not os.path.exists(dirname):
+		os.mkdir(dirname)
+	fname=dirname+"/quagga_bgpd.conf"
 	conf_tex = gen_text(2,"spine",i)
 	f = open(fname, 'w')
 	f.write(conf_tex)
 	f.close()
 
 for i in xrange(1,3):
-	fname='quagga_bgpd_leaf'+str(i)
+	dirname = "l"+str(i)
+	if not os.path.exists(dirname):
+		os.mkdir(dirname)
+	fname=dirname+"/quagga_bgpd.conf"
 	conf_tex = gen_text(3,"leaf",i)
 	f = open(fname, 'w')
 	f.write(conf_tex)
