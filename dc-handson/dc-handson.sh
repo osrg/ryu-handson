@@ -6,12 +6,13 @@ add_netns() {
 }
 
 run_host() {
-    docker run --name $1 --net none -itd ubuntu:14.04 /bin/bash
+    docker run --name $1 --privileged=true --net none -itd ubuntu:14.04 /bin/bash
     add_netns $1
 }
 
 run_router() {
-    docker run  --name $1 --privileged=true --net none -itd osrg/quagga
+    head -n2 $1/bgpd.conf > $1/zebra.conf
+    docker run  --name $1 --privileged=true --net none -v $PWD/$1:/etc/quagga -itd osrg/quagga
     add_netns $1
 }
 
@@ -31,6 +32,13 @@ add_link() {
     sudo ip netns exec ${name2} ip link set name ${if2} dev ${name2}-${if2}
     sudo ip netns exec ${name2} ip link set up dev ${if2}
     sudo ip netns exec ${name2} ip addr add ${ip2} dev ${if2}
+}
+
+add_route() {
+    local name=$1
+    local prefix=$2
+    local nexthop=$3
+    sudo ip netns exec $name ip route add $prefix via $nexthop
 }
 
 del_link() {
@@ -73,6 +81,7 @@ case "$1" in
         sudo docker pull ubuntu:14.04
         sudo docker pull osrg/quagga
         sudo mkdir -p /var/run/netns
+        python gen_quaggaconf.py
 	;;
     start)
 	run_host h1
@@ -88,6 +97,9 @@ case "$1" in
 	add_link s1 eth2    10.1.2.1/24 l2 eth1    10.1.2.2/24
 	add_link s2 eth1    10.2.1.1/24 l1 eth2    10.2.1.2/24
 	add_link s2 eth2    10.2.2.1/24 l2 eth2    10.2.2.2/24
+
+        add_route h1 0.0.0.0/0 192.168.1.1
+        add_route h2 0.0.0.0/0 192.168.2.1
 
         case "$2" in
             --s3)
