@@ -39,6 +39,20 @@ del_link() {
     sudo ip netns exec $name ip link del dev $2
 }
 
+del_all_link() {
+    local cname=$1
+    sudo ip netns exec $cname ip link | awk -F': ' '/^[0-9]+:/{print $2}' | grep -v lo | while read if; do
+        sudo ip netns exec $cname ip link del $if
+    done
+}
+
+del_all_netns() {
+    docker ps -q | while read cid; do
+        cname=$(docker inspect --format '{{.Name}}' $cid | tr -d /)
+        sudo rm -f /var/run/netns/$cname
+    done
+}
+
 check_user() {
     if [ `whoami` = "root" ]; then
         echo "Super user cannot execute! Please execute as non super user"
@@ -74,19 +88,23 @@ case "$1" in
 	add_link s1 eth2    10.1.2.1/24 l2 eth1    10.1.2.2/24
 	add_link s2 eth1    10.2.1.1/24 l1 eth2    10.2.1.2/24
 	add_link s2 eth2    10.2.2.1/24 l2 eth2    10.2.2.2/24
+
+        case "$2" in
+            --s3)
+                run_router s3
+                add_link s3 eth1 10.3.1.1/24 l1 eth3 10.3.1.2/24
+                add_link s3 eth2 10.3.2.1/24 l2 eth3 10.3.2.2/24
+                ;;
+        esac
 	;;
     stop)
-        del_link l1 eth0
-        del_link l1 eth1
-        del_link l1 eth2
-        del_link l2 eth0
-        del_link l2 eth1
-        del_link l2 eth2
-        sudo rm -f /var/run/netns/*
+        del_all_link l1
+        del_all_link l2
+        del_all_netns
 	docker rm -f $(docker ps -qa)
 	;;
     *)
-        echo "Usage: ryu-docker-handson {install|start|stop}"
+        echo "Usage: $0 {install|start|stop}"
         exit 2
         ;;
 esac
