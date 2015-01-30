@@ -1,4 +1,5 @@
-#!/usr/bin/python
+# coding: UTF-8
+#!/usr/bin/env python
 
 import os
 
@@ -23,46 +24,45 @@ def gen_text(neighbornum=2, router_type="spine", subnum=1):
 		network.append("10.3."+str(subnum)+".0/24")
 		network.append("192.168."+str(subnum)+".0/24")
 		network_num=4
-	conf_tex ="\t\thostname "+ router_type + str(subnum)
+	conf_tex ="hostname "+ router_type + str(subnum)
 	conf_tex += """
-		password zebra
-		log file /var/log/quagga/bgpd.log
-		!
-		!
-		"""
+password zebra
+log file /var/log/quagga/bgpd.log
+!
+!
+"""
 	conf_tex += "router bgp "+myAS+"\n"
 
-	conf_tex+="\t\tbgp router-id "+myid+"\n"
+	conf_tex+="bgp router-id "+myid+"\n"
 	for i in range(network_num):
-		conf_tex+="\t\tnetwork "+network[i]+"\n"
+		conf_tex+="network "+network[i]+"\n"
 		
-	conf_tex+="\t\t!\n \t\t!\n"
+	conf_tex+="!\n!\n"
 
 	if router_type=="spine":
 		for p in range(neighbornum):
 			nid = "neighbor "+"10."+str(subnum)+"."+str(p+1)+".2"
-			conf_tex+="\t\t"+nid + " remote-as 6501"+str(p+1)+"\n"
-			conf_tex+="\t\t"+nid + " timers 1 4\n"
-			conf_tex+="\t\t"+nid + " version 4\n"
-			conf_tex+="\t\t"+nid + " timers connect 1\n"
-			conf_tex+="\t\t!\n \t\t!\n"
+			conf_tex+=""+nid + " remote-as 6501"+str(p+1)+"\n"
+			conf_tex+=""+nid + " timers 1 4\n"
+			conf_tex+=""+nid + " version 4\n"
+			conf_tex+=""+nid + " timers connect 1\n"
+			conf_tex+="!\n!\n"
 	else:
 		for p in range(neighbornum):
 			nid = "neighbor "+"10."+str(p+1)+"."+str(subnum)+".1"
-			conf_tex+="\t\t"+nid + " remote-as 6500"+str(p+1)+"\n"
-			conf_tex+="\t\t"+nid + " timers 1 4\n"
-			conf_tex+="\t\t"+nid + " version 4\n"
-			conf_tex+="\t\t"+nid + " timers connect 1\n"
-			conf_tex+="\t\t!\n \t\t!\n"
+			conf_tex+=""+nid + " remote-as 6500"+str(p+1)+"\n"
+			conf_tex+=""+nid + " timers 1 4\n"
+			conf_tex+=""+nid + " version 4\n"
+			conf_tex+=""+nid + " timers connect 1\n"
+			conf_tex+="!\n!\n"
 
 
 	conf_tex+="""\
-		!
-		line vty
-		!
-		end"""
+!
+line vty
+!
+end"""
 	return conf_tex
-#!/usr/bin/env python
 
 
 for i in xrange(1,4):
