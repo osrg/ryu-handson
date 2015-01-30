@@ -79,7 +79,7 @@ for i in xrange(1,3):
 	dirname = "l"+str(i)
 	if not os.path.exists(dirname):
 		os.mkdir(dirname)
-	fname=dirname+"/gpd.conf"
+	fname=dirname+"/bgpd.conf"
 	conf_tex = gen_text(3,"leaf",i)
 	f = open(fname, 'w')
 	f.write(conf_tex)
