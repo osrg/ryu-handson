@@ -84,6 +84,9 @@ case "$1" in
         python gen_quaggaconf.py
 	;;
     start)
+        echo 0 | sudo tee /proc/sys/net/ipv4/conf/default/rp_filter >/dev/null
+        echo 0 | sudo tee /proc/sys/net/ipv4/conf/all/rp_filter >/dev/null
+
 	run_host h1
 	run_host h2
 	run_router l1
