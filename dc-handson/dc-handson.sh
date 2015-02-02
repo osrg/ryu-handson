@@ -68,6 +68,13 @@ check_user() {
     fi
 }
 
+check_permission() {
+    if ! docker ps; then
+        echo "Cannot execute docker command. Please logout and re-login to join docker group."
+        exit 2
+    fi
+}
+
 case "$1" in
     install)
         check_user
@@ -84,6 +91,8 @@ case "$1" in
         python gen_quaggaconf.py
 	;;
     start)
+        check_permission
+
         echo 0 | sudo tee /proc/sys/net/ipv4/conf/default/rp_filter >/dev/null
         echo 0 | sudo tee /proc/sys/net/ipv4/conf/all/rp_filter >/dev/null
 
@@ -113,6 +122,8 @@ case "$1" in
         esac
 	;;
     stop)
+        check_permission
+
         del_all_link l1
         del_all_link l2
         del_all_netns
