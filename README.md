@@ -11,10 +11,10 @@ Setup
 Open a terminal and execute the following commands:
 
 ```
-% sudo apt-get install -y --force-yes wget
-% wget https://raw.githubusercontent.com/osrg/ryu-handson/master/docker/ryu-docker-handson.sh
-% chmod +x ryu-docker-handson.sh
-% ./ryu-docker-handson.sh install
+% sudo apt-get install -y --force-yes git
+% git clone https://github.com/osrg/ryu-handson.git
+% cd ryu-handson/dc-handson
+% ./dc-handson.sh install
 ```
 
 All necessary software will be installed.
