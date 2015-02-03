@@ -69,7 +69,7 @@ check_user() {
 }
 
 check_permission() {
-    if ! docker ps; then
+    if ! docker ps >/dev/null; then
         echo "Cannot execute docker command. Please logout and re-login to join docker group."
         exit 2
     fi
@@ -84,7 +84,7 @@ case "$1" in
 	sudo apt-get install -y --force-yes lxc-docker-1.3.2
 	sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker
 	sudo gpasswd -a `whoami` docker
-	sudo apt-get install -y --force-yes iputils-arping bridge-utils tcpdump lv ethtool
+	sudo apt-get install -y --force-yes iputils-arping bridge-utils tcpdump lv ethtool python
         sudo docker pull ubuntu:14.04
         sudo docker pull osrg/quagga
         sudo mkdir -p /var/run/netns
