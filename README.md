@@ -18,3 +18,9 @@ Open a terminal and execute the following commands:
 ```
 
 All necessary software will be installed.
+
+Slides (in Japanese)
+--------------------
+[Docker part](https://github.com/osrg/ryu-handson/blob/master/dc-handson/docker.pdf?raw=true)
+
+[BGP part](https://github.com/osrg/ryu-handson/blob/master/dc-handson/20150204_bgp.pdf?raw=true)
